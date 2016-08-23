@@ -17,12 +17,12 @@
 		</div>
 
 		<div id="operations">
-			<button type="button"  onclick="operation(+)">+</button>
-			<button type="button"  onclick="operation(-)">-</button>
-			<button type="button"  onclick="operation(*)">*</button>
-			<button type="button"  onclick="operation(/)">/</button>
+			<button type="button"  onclick="operation('+')">+</button>
+			<button type="button"  onclick="operation('-')">-</button>
+			<button type="button"  onclick="operation('*')">*</button>
+			<button type="button"  onclick="operation('/')">/</button>
 			<button type="button"  onclick="negativo()">(-)</button>
-			<button type="button"  onclick="display(euler)">e</button>
+			<button type="button"  onclick="display('e')">e</button>
 		</div>
 
 
@@ -30,18 +30,18 @@
 			<button type="button"  class="number" onclick="display(7)">7</button>
 			<button type="button"  class="number" onclick="display(8)">8</button>
 			<button type="button"  class="number" onclick="display(9)">9</button>
-			<button type="button"  class="ops" onclick="operation(^2)">x^2</button>
-			<button type="button"  class="ops" onclick="operation(sin)">Sin</button>
-			<button type="button"  class="ops" onclick="operation(arcsin)">aSin</button>
+			<button type="button"  class="ops" onclick="operation('^2')">x^2</button>
+			<button type="button"  class="ops" onclick="operation('sin')">Sin</button>
+			<button type="button"  class="ops" onclick="operation('asin')">aSin</button>
 		</div>
 
 		<div id="row2">
 			<button type="button"  class="number" onclick="display(4)">4</button>
 			<button type="button"  class="number" onclick="display(5)">5</button>
 			<button type="button"  class="number" onclick="display(6)">6</button>
-			<button type="button"  class="ops" onclick="display(sqrt)">Sqrt</button>
-			<button type="button"  class="ops" onclick="operation(cos)">Cos</button>
-			<button type="button"  class="ops" onclick="operation(arccos)">aCos</button>
+			<button type="button"  class="ops" onclick="display('sqrt')">Sqrt</button>
+			<button type="button"  class="ops" onclick="operation('cos')">Cos</button>
+			<button type="button"  class="ops" onclick="operation('acos')">aCos</button>
 		</div>
 
 
@@ -50,8 +50,8 @@
 			<button type="button"  class="number" onclick="display(2)">2</button>
 			<button type="button"  class="number" onclick="display(3)" >3</button>
 			<button type="button"  class="ops" onclick="operation(^)">Pow</button>
-			<button type="button"  class="ops" onclick="operation(tan)">Tan</button>
-			<button type="button"  class="ops" onclick="operation(arctan)">aTan</button>
+			<button type="button"  class="ops" onclick="operation('tan')">Tan</button>
+			<button type="button"  class="ops" onclick="operation('atan')">aTan</button>
 		</div>
 
 		<div id="row4">
@@ -60,6 +60,11 @@
 			<button type="button"  onclick="limpiar()">C</button>
 			<button type="button"  onclick="display(Pi)">Pi</button>
 			<button type="button"  style="width:109px" onclick="compute()">=</button>
+		</div>
+
+		<div id="row5">
+			<input id="ops" type="text" readonly="true"></input>
+			<input id="nums" type="text" readonly="true"></input>
 		</div>
 	</div>
 
