@@ -9,9 +9,8 @@ function compute(){
 	document.getElementById("display").value = "Computing";
 }
 
-function clear(){
-	var vacio;
-	document.getElementById("display").value = vacio;
+function limpiar(){
+	document.getElementById("display").value = "";
 }
 
 function operation(operation){
