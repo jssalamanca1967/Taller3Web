@@ -13,7 +13,7 @@ var opFaltante = "";
 var end = false;
 
 function comprobar(){
-	document.getElementById("ops").value = operaciones;
+	document.getElementById("oper").value = operaciones;
 	document.getElementById("nums").value = numeros;
 }
 
@@ -54,6 +54,10 @@ function display(value){
 	else if(value === "sqrt"){
 		document.getElementById("display").value = document.getElementById("display").value + value + "(";
 	}
+	else if(value === "sin" || value === "asin" || value === "cos" || value === "acos" || value === "tan" || value === "atan"){
+		document.getElementById("display").value = document.getElementById("display").value + value + "(";
+			comprobar();
+	}
 	else if(value === "^2"){
 		if(negativo){
 			document.getElementById("display").value = document.getElementById("display").value + ")" + value;
@@ -74,8 +78,21 @@ function display(value){
 
 		negativo = true;
 	}
+	else if(value === "Pi"){
+		numActual = Math.PI;
+		document.getElementById("display").value = document.getElementById("display").value + numActual;
+		contNums ++;
+	}
+	else if(value === "e"){
+		numActual = Math.E;
+		document.getElementById("display").value = document.getElementById("display").value + numActual;
+		contNums ++;
+	}
 	else{
 		document.getElementById("display").value = document.getElementById("display").value + value;
+		if(parseFloat(numActual) == Math.PI || parseFloat(numActual) == Math.E){
+			error = true;
+		}
 		numActual = numActual + value;
 		contOperaciones = 0;
 		contNums ++;
@@ -95,61 +112,142 @@ function compute(){
 
 	var dif = numeros.length - operaciones.length;
 
-	if(dif != 1){
+	if(dif > 1){
 		error = true;
+
 	}
 
 	if(error){
 		document.getElementById("display").value = "Error";
+		end = true;
 	}
 	else{
 
 		while(operaciones.length > 0){
-			var index = operaciones.indexOf("^");
+			var index = operaciones.indexOf("sin");
 
 			if(index != -1){
-				num1 = parseInt(numeros[index]);
-				num2 = parseInt(numeros[index+1]);
-				var total = Math.pow(num1,num2);
+
+				num2 = parseFloat(numeros[index+1]);
+				var total = Math.sin(num2);
 				numeros[index]=total;
 				numeros.splice(index+1,1);
 				operaciones.splice(index,1);
 			}
 			else{
-				index = operaciones.indexOf("*");
+
+				index = operaciones.indexOf("asin");
 				if(index != -1){
-					num1 = parseInt(numeros[index]);
-					num2 = parseInt(numeros[index+1]);
-					var total = num1*num2;
+
+					num2 = parseFloat(numeros[index+1]);
+					var total = Math.asin(num2);
 					numeros[index]=total;
 					numeros.splice(index+1,1);
 					operaciones.splice(index,1);
 				}
+
 				else{
 
-					index = operaciones.indexOf("+");
+					index = operaciones.indexOf("cos");
 					if(index != -1){
-						num1 = parseInt(numeros[index]);
-						num2 = parseInt(numeros[index+1]);
-						var total = num1+num2;
+
+						num2 = parseFloat(numeros[index+1]);
+						var total = Math.cos(num2);
 						numeros[index]=total;
 						numeros.splice(index+1,1);
 						operaciones.splice(index,1);
 					}
 					else{
-						index = operaciones.indexOf("-");
+
+						index = operaciones.indexOf("acos");
 						if(index != -1){
-							num1 = parseInt(numeros[index]);
-							num2 = parseInt(numeros[index+1]);
-							var total = num1+num2;
+
+							num2 = parseFloat(numeros[index+1]);
+							var total = Math.acos(num2);
 							numeros[index]=total;
 							numeros.splice(index+1,1);
 							operaciones.splice(index,1);
+						}
+						else{
+
+							index = operaciones.indexOf("tan");
+							if(index != -1){
+
+								num2 = parseFloat(numeros[index+1]);
+								var total = Math.tan(num2);
+								numeros[index]=total;
+								numeros.splice(index+1,1);
+								operaciones.splice(index,1);
+							}
+							else{
+
+								index = operaciones.indexOf("atan");
+								if(index != -1){
+
+									num2 = parseFloat(numeros[index+1]);
+									var total = Math.atan(num2);
+									numeros[index]=total;
+									numeros.splice(index+1,1);
+									operaciones.splice(index,1);
+								}
+								index = operaciones.indexOf("^");
+
+								if(index != -1){
+									num1 = parseFloat(numeros[index]);
+									num2 = parseFloat(numeros[index+1]);
+									var total = Math.pow(num1,num2);
+									numeros[index]=total;
+									numeros.splice(index+1,1);
+									operaciones.splice(index,1);
+								}
+								else{
+									index = operaciones.indexOf("*");
+									if(index != -1){
+										num1 = parseFloat(numeros[index]);
+										num2 = parseFloat(numeros[index+1]);
+										var total = num1*num2;
+										numeros[index]=total;
+										numeros.splice(index+1,1);
+										operaciones.splice(index,1);
+									}
+									else{
+
+										index = operaciones.indexOf("+");
+										if(index != -1){
+											num1 = parseFloat(numeros[index]);
+											num2 = parseFloat(numeros[index+1]);
+											var total = num1+num2;
+											numeros[index]=total;
+											numeros.splice(index+1,1);
+											operaciones.splice(index,1);
+										}
+										else{
+											index = operaciones.indexOf("-");
+											if(index != -1){
+												num1 = parseFloat(numeros[index]);
+												num2 = parseFloat(numeros[index+1]);
+												var total = num1+num2;
+												numeros[index]=total;
+												numeros.splice(index+1,1);
+												operaciones.splice(index,1);
+											}
+
+										}
+
+									}
+
+								}
+
+							}
+
 						}
 
 					}
 
 				}
+
+
+
 			}
 		}
 
@@ -218,6 +316,16 @@ function operation(operation){
 		operaciones.push("^");
 		display(operation);
 		opFaltante = "sqrt";
+	}
+	else if(operation === "sin" || operation === "asin" || operation === "cos" || operation === "acos" || operation === "tan" || operation === "atan"){
+		if(contOperaciones < 1){
+			error = true;
+		}
+		operacionConParentesis = true;
+		operaciones.push(operation);
+		numeros.push(operation);
+		display(operation);
+
 	}
 	else{
 		contOperaciones ++;
