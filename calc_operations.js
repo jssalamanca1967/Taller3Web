@@ -32,7 +32,9 @@ function display(value){
 	}
 
 	if(value === "+" || value === "-" || value === "*" || value === "/" || value === "^"){
-		guardarNum();
+		if(contNums > 0){
+			guardarNum();
+		}
 		if(negativo || operacionConParentesis){
 			if(negativo){
 				document.getElementById("display").value = document.getElementById("display").value + ")" + value;
