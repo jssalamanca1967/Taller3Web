@@ -1,5 +1,3 @@
-var operacionesValidas = ["+","-","*","/","^2","^","sqrt"];
-var operacionesPar = ["sqrt"]
 var operaciones = [];
 var numeros = [];
 var contOperaciones = 0;
@@ -19,7 +17,7 @@ function comprobar(){
 
 function operacionesRestantes(){
 	if(opFaltante === "sqrt"){
-		numeros.push("1/2")
+		numeros.push(0.5)
 	}
 	opFaltante = "";
 }
@@ -80,12 +78,12 @@ function display(value){
 	}
 	else if(value === "Pi"){
 		numActual = Math.PI;
-		document.getElementById("display").value = document.getElementById("display").value + numActual;
+		document.getElementById("display").value = document.getElementById("display").value + "Pi";
 		contNums ++;
 	}
 	else if(value === "e"){
 		numActual = Math.E;
-		document.getElementById("display").value = document.getElementById("display").value + numActual;
+		document.getElementById("display").value = document.getElementById("display").value + "e";
 		contNums ++;
 	}
 	else{
@@ -103,6 +101,9 @@ function display(value){
 }
 
 function compute(){
+	if(operacionConParentesis){
+		document.getElementById("display").value = document.getElementById("display").value + ")";
+	}
 	if(contNums > 0){
 		guardarNum();
 	}
@@ -122,6 +123,8 @@ function compute(){
 		end = true;
 	}
 	else{
+
+		document.getElementById("cola").value = document.getElementById("display").value + "=";
 
 		while(operaciones.length > 0){
 			var index = operaciones.indexOf("sin");
@@ -296,10 +299,17 @@ function limpiar(){
 	error = false;
 	negativo = false;
 	operacionConParentesis = false;
+	operacionesRestantes = false;
 	numActual = "";
 }
 
 function operation(operation){
+
+	if(end){
+		limpiar();
+		comprobar();
+		end = false;
+	}
 
 	if(operation === "^2"){
 		guardarNum();
@@ -310,7 +320,9 @@ function operation(operation){
 	}
 	else if(operation === "sqrt"){
 		if(contOperaciones < 1){
-			error = true;
+			if(operaciones.length > 0){
+				error = true;
+			}
 		}
 		operacionConParentesis = true;
 		operaciones.push("^");
@@ -319,7 +331,9 @@ function operation(operation){
 	}
 	else if(operation === "sin" || operation === "asin" || operation === "cos" || operation === "acos" || operation === "tan" || operation === "atan"){
 		if(contOperaciones < 1){
-			error = true;
+			if(operaciones.length > 0){
+				error = true;
+			}
 		}
 		operacionConParentesis = true;
 		operaciones.push(operation);
