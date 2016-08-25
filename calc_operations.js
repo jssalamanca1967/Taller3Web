@@ -10,10 +10,6 @@ var numActual = "";
 var opFaltante = "";
 var end = false;
 
-function comprobar(){
-	document.getElementById("oper").value = operaciones;
-	document.getElementById("nums").value = numeros;
-}
 
 function operacionesRestantes(){
 	if(opFaltante === "sqrt"){
@@ -25,7 +21,7 @@ function operacionesRestantes(){
 function display(value){
 	if(end){
 		limpiar();
-		comprobar();
+
 		end = false;
 	}
 
@@ -54,7 +50,7 @@ function display(value){
 	}
 	else if(value === "sin" || value === "asin" || value === "cos" || value === "acos" || value === "tan" || value === "atan"){
 		document.getElementById("display").value = document.getElementById("display").value + value + "(";
-			comprobar();
+
 	}
 	else if(value === "^2"){
 		if(negativo){
@@ -96,7 +92,7 @@ function display(value){
 		contNums ++;
 	}
 
-	comprobar();
+
 
 }
 
@@ -261,7 +257,7 @@ function compute(){
 
 	}
 
-	comprobar();
+
 
 }
 
@@ -307,7 +303,7 @@ function operation(operation){
 
 	if(end){
 		limpiar();
-		comprobar();
+
 		end = false;
 	}
 
