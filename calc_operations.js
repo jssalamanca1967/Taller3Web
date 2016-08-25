@@ -10,7 +10,6 @@ var numActual = "";
 var opFaltante = "";
 var end = false;
 
-
 function operacionesRestantes(){
 	if(opFaltante === "sqrt"){
 		numeros.push(0.5)
@@ -91,15 +90,17 @@ function display(value){
 		contOperaciones = 0;
 		contNums ++;
 	}
-
-
-
 }
 
+
 function compute(){
+	if(negativo){
+		document.getElementById("display").value = document.getElementById("display").value + ")";
+	}
 	if(operacionConParentesis){
 		document.getElementById("display").value = document.getElementById("display").value + ")";
 	}
+
 	if(contNums > 0){
 		guardarNum();
 	}
@@ -109,7 +110,7 @@ function compute(){
 
 	var dif = numeros.length - operaciones.length;
 
-	if(dif > 1){
+	if(dif != 1){
 		error = true;
 
 	}
@@ -194,6 +195,10 @@ function compute(){
 								if(index != -1){
 									num1 = parseFloat(numeros[index]);
 									num2 = parseFloat(numeros[index+1]);
+									if(num1 < 0 && num2 == 0.5){
+										error = true;
+										break;
+									}
 									var total = Math.pow(num1,num2);
 									numeros[index]=total;
 									numeros.splice(index+1,1);
@@ -211,17 +216,17 @@ function compute(){
 									}
 									else{
 
-										index = operaciones.indexOf("+");
+										index = operaciones.indexOf("/");
 										if(index != -1){
 											num1 = parseFloat(numeros[index]);
 											num2 = parseFloat(numeros[index+1]);
-											var total = num1+num2;
+											var total = num1/num2;
 											numeros[index]=total;
 											numeros.splice(index+1,1);
 											operaciones.splice(index,1);
 										}
 										else{
-											index = operaciones.indexOf("-");
+											index = operaciones.indexOf("+");
 											if(index != -1){
 												num1 = parseFloat(numeros[index]);
 												num2 = parseFloat(numeros[index+1]);
@@ -230,46 +235,45 @@ function compute(){
 												numeros.splice(index+1,1);
 												operaciones.splice(index,1);
 											}
-
+											else{
+												index = operaciones.indexOf("-");
+												if(index != -1){
+													num1 = parseFloat(numeros[index]);
+													num2 = parseFloat(numeros[index+1]);
+													var total = num1-num2;
+													numeros[index]=total;
+													numeros.splice(index+1,1);
+													operaciones.splice(index,1);
+												}
+											}
 										}
-
 									}
-
 								}
-
 							}
-
 						}
-
 					}
-
 				}
-
-
-
 			}
 		}
 
-		document.getElementById("display").value = numeros[0];
-
+		if(error){
+			document.getElementById("display").value = "Error";
+			end = true;
+		}
+		else{
+			document.getElementById("display").value = numeros[0];
+		}
 		end = true;
-
-
 	}
 
 
 
 }
 
+
+
+
 function guardarNum(){
-
-	// var value = document.getElementById("display").value;
-	//
-	// var longitud = value.length - 1;
-	// var start = longitud - contNums;
-	//
-	// var num = value.substring(start,longitud);
-
 	var num = 0;
 	var num = numActual;
 	numActual = "";
@@ -278,7 +282,9 @@ function guardarNum(){
 		num = (-1)*num;
 	}
 
-	numeros.push(num);
+	if(contNums > 0){
+		numeros.push(num);
+	}
 
 	contNums = 0;
 
@@ -295,7 +301,7 @@ function limpiar(){
 	error = false;
 	negativo = false;
 	operacionConParentesis = false;
-	operacionesRestantes = false;
+	opFaltante = false;
 	numActual = "";
 }
 
